@@ -27,13 +27,34 @@ public class HeapBuilder {
         }
 
         //Print heapified array
+        System.out.println("Heapified array: ");
         for (WordFreq wf : arr) {
             System.out.println(wf.word + " - " + wf.frequency);
         }
     }
 
     public static void maxHeapify(WordFreq[] arr, int n, int i) {
-        
+        int largest = i;
+        int leftChildIndex = 2 * i + 1;
+        int rightChildIndex = 2 * i + 2;
+
+        //check left child node exists and is greater than current largest node (parent)
+        if (leftChildIndex < n && arr[leftChildIndex].frequency > arr[largest].frequency){
+            largest = leftChildIndex;
+        }
+
+        //check right child node exists and is greater than current largest node
+        if (rightChildIndex < n && arr[rightChildIndex].frequency > arr[largest].frequency){
+            largest = rightChildIndex;
+        }
+
+        //if parent node is not largest, swap and continue heapifying
+        if (largest != i) {
+            WordFreq temp = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = temp;
+            maxHeapify(arr, n, largest);
+        }
     }
 }
 
